@@ -1,12 +1,12 @@
-import { Grid, Paper, TextField, Typography } from "@mui/material";
+import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
 import Img from "../assets/img.jpg";
 interface LoginFormProps {
   title: string;
-  input?: any;
+  children?: JSX.Element;
 }
 
-const LoginForm = ({ title, input }: any) => {
+const LoginForm = ({ title, children }: any) => {
   return (
     <>
       <Grid
@@ -20,16 +20,19 @@ const LoginForm = ({ title, input }: any) => {
         }}
         spacing={2}
       >
-        <Grid item xs={12}>
-          <Paper>
-            <Typography>{title}</Typography>
-            <TextField
-              id="standard-basic"
-              label="Username"
-              variant="standard"
-            />
-            <TextField id="standard-basic" label="Senha" variant="standard" />
-            {input}
+        <Grid item xs={6}>
+          <Paper
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              padding: "10px",
+            }}
+          >
+            <Typography variant="h3" sx={{ textAlign: "center" }}>
+              {title}
+            </Typography>
+            {children}
           </Paper>
         </Grid>
       </Grid>

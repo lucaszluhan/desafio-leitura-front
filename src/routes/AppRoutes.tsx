@@ -1,5 +1,6 @@
 import React from "react";
 import { RouterProvider, Router, createBrowserRouter } from "react-router-dom";
+import CriarConta from "../pages/CriarConta";
 import Login from "../pages/Login";
 
 const router = createBrowserRouter([
@@ -7,7 +8,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Login />,
   },
-  // { path: "/criar-conta", element: <CriarConta /> },
+  { path: "/criar-conta", element: <CriarConta /> },
 ]);
 function AppRoutes() {
   return <RouterProvider router={router} />;
