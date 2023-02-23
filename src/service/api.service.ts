@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: "http://localhost:3333",
 });
 
 interface CreateUserType {
@@ -31,7 +31,7 @@ export interface LoginUserType {
 }
 export const loginUser = async (user: LoginUserType) => {
   try {
-    const result = await api.post("/login", user);
+    const result = await api.post("/user/login", user);
     return result.data;
   } catch (error: any) {
     if (error.request.response) {
