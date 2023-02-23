@@ -8,6 +8,9 @@ const CriarConta = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [nome, setNome] = useState<string>("");
+  const [meta, setMeta] = useState<number>(0);
+
   const navigate = useNavigate();
 
   const handleCreateUser = async () => {
@@ -25,6 +28,8 @@ const CriarConta = () => {
     }
     const user = {
       username,
+      nome,
+      meta,
       password,
     };
     const result = await createUser(user);
@@ -51,6 +56,22 @@ const CriarConta = () => {
           variant="standard"
           value={username || ""}
           onChange={(ev) => setUsername(ev.target.value)}
+        />
+        <TextField
+          color="secondary"
+          id="standard-basic"
+          label="Nome"
+          variant="standard"
+          value={nome || ""}
+          onChange={(ev) => setNome(ev.target.value)}
+        />
+        <TextField
+          color="secondary"
+          id="standard-basic"
+          label="Meta"
+          variant="standard"
+          value={meta || ""}
+          onChange={(ev) => setMeta(Number(ev.target.value))}
         />
         <TextField
           color="secondary"
