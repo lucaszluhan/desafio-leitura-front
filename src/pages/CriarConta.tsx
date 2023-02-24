@@ -1,8 +1,8 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { createUser } from "../service/api.service";
+import { useState } from "react";
 
 const CriarConta = () => {
   const [username, setUsername] = useState<string>("");
