@@ -1,5 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginUser, LoginUserType } from "../../service/api.service";
+import {
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
+import {
+  loginUser,
+  LoginUserType,
+} from "../../service/api.service";
 
 export const loginAction = createAsyncThunk(
   "user/Login",
@@ -10,9 +16,22 @@ export const loginAction = createAsyncThunk(
 );
 const loginSlice = createSlice({
   name: "Login",
-  initialState: null,
+  initialState: {
+    logged: false,
+    user: {} as any,
+  },
   reducers: {},
-  extraReducers(builder) {},
+  extraReducers(builder) {
+    builder.addCase(
+      loginAction.fulfilled,
+      (state, action) => {
+        return {
+          logged: true,
+          user: action.payload.data,
+        };
+      }
+    );
+  },
 });
 
 export default loginSlice.reducer;

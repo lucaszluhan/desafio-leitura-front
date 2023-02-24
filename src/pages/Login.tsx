@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { useAppDispatch } from "../store/hooks";
 import { loginAction } from "../store/modules/loginSlice";
@@ -9,17 +10,24 @@ interface LoginProps {
 }
 
 const Login = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] =
+    useState<string>("");
+  const [password, setPassword] =
+    useState<string>("");
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!username || username.length < 4) {
-      alert("Preencha o nome de usuário com ao menos 4 caracteres");
+      alert(
+        "Preencha o nome de usuário com ao menos 4 caracteres"
+      );
       return;
     }
-    if (!password || password.length < 4) {
-      alert("Preencha a senha com ao menos 4 caracteres");
+    if (!password || password.length < 1) {
+      alert(
+        "Preencha a senha com ao menos 4 caracteres"
+      );
       return;
     }
     const login = {
@@ -27,12 +35,14 @@ const Login = () => {
       password,
     };
 
-    const result = await dispatch(loginAction(login)).unwrap();
+    const result = await dispatch(
+      loginAction(login)
+    ).unwrap();
     if (!result.ok) {
       alert(result.message);
       return;
     }
-    alert("Login realizado com sucesso");
+    navigate("/home");
   };
   return (
     <>
@@ -43,7 +53,9 @@ const Login = () => {
           label="username"
           variant="standard"
           value={username || ""}
-          onChange={(ev) => setUsername(ev.target.value)}
+          onChange={(ev) =>
+            setUsername(ev.target.value)
+          }
         />
         <TextField
           color="secondary"
@@ -51,9 +63,13 @@ const Login = () => {
           label="password"
           variant="standard"
           value={password || ""}
-          onChange={(ev) => setPassword(ev.target.value)}
+          onChange={(ev) =>
+            setPassword(ev.target.value)
+          }
         />
-        <Button onClick={handleLogin}>Login</Button>
+        <Button onClick={handleLogin}>
+          Login
+        </Button>
       </LoginForm>
     </>
   );
