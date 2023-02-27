@@ -6,6 +6,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { creatBookAction } from "../store/modules/leituraSlice";
 
 interface FormDialogProps {
   open: boolean;
@@ -14,11 +16,15 @@ interface FormDialogProps {
 
 export default function FormDialog({ open, close }: FormDialogProps) {
   const [name, setName] = useState<string>("");
+  const [genre, setGenre] = useState<string>("");
   const [paginas, setPaginas] = useState<number>(0);
-  const [dataI, setDataI] = useState<Number>();
-  const [dataT, setDataT] = useState<Number>();
+  const [dataI, setDataI] = useState<string>();
+  const [dataT, setDataT] = useState<string>();
+  const userLogged = useAppSelector((state) => state.Login);
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(userLogged.user.id);
     if (!name) {
       alert("Insira o nome do livro");
       return;
@@ -31,10 +37,24 @@ export default function FormDialog({ open, close }: FormDialogProps) {
       alert("Insira a data de início");
       return;
     }
-    if (!dataI) {
+    if (!dataT) {
       alert("Insira a data de término");
       return;
     }
+    if (!genre) {
+      alert("Insira a data de término");
+      return;
+    }
+    const book = {
+      userId: userLogged.user.id,
+      nome: name,
+      genero: genre,
+      numPaginas: paginas,
+      data: dataI,
+    };
+    console.log(book);
+    const result = await dispatch(creatBookAction(book)).unwrap();
+    close();
   };
 
   return (
@@ -55,6 +75,16 @@ export default function FormDialog({ open, close }: FormDialogProps) {
           <TextField
             autoFocus
             margin="dense"
+            onChange={(ev) => setGenre(ev.target.value)}
+            id="name"
+            label="Gênero do Livro"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
             onChange={(ev) => setPaginas(Number(ev.target.value))}
             id="name"
             label="Numero de páginas"
@@ -66,7 +96,7 @@ export default function FormDialog({ open, close }: FormDialogProps) {
           <TextField
             autoFocus
             margin="dense"
-            onChange={(ev) => setDataI(Number(ev.target.value))}
+            onChange={(ev) => setDataI(ev.target.value)}
             id="name"
             fullWidth
             type="date"
@@ -76,7 +106,7 @@ export default function FormDialog({ open, close }: FormDialogProps) {
           <TextField
             autoFocus
             margin="dense"
-            onChange={(ev) => setDataT(Number(ev.target.value))}
+            onChange={(ev) => setDataT(ev.target.value)}
             id="name"
             fullWidth
             type="date"
